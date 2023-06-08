@@ -1,5 +1,6 @@
 const express = require("express");
 var router = express.Router();
+const path = require('path');
 const mongoose = require("mongoose");
 const Memory = mongoose.model("Memory");
 
@@ -12,19 +13,21 @@ router.post("/api", (req, res) => {
 });
 
 function insertRecord(req, res) {
-  var memory = new Memory();
-  memory.Title = req.body.Title;
-  memory.Tags = req.body.Tags;
-  memory.Date = req.body.Date;
-  memory.Descrtiption = req.body.Descrtiption;
-  memory.URL = req.body.URL;
-  memory.Note = req.body.Note;
-  memory.save()
-  .then(function() {
-    console.log("Saved memory: " + memory.Title);
-    res.redirect("list");
-  });
-}
+    var memory = new Memory();
+    memory.Title = req.body.Title;
+    memory.Tags = req.body.Tags;
+    memory.Date = req.body.Date;
+    memory.Description = req.body.Description;
+    memory.URL = req.body.URL;
+    memory.Note = req.body.Note;
+    memory.save()
+    .then(function(memory) {
+      console.log("Saved memory: " + memory.Title);
+      res.send(memory);
+      // Below is what I do for MMs after posting... not quite working here...
+      //res.sendFile(path.join(__dirname, '../../client/public/'));
+    });
+  }
 
 function updateRecord(req, res) {
   Memory.findOneAndUpdate(
@@ -60,7 +63,7 @@ router.get("/list", (req, res) => {
 // Get list of all memories with same title
 router.get("/api", (req, res) => {
     let title = req.query.Title;
-    Memory.findOne({Title: title})
+    Memory.find({Title: title})
         .then(function (memories) {
             console.log("All memories: " + memories);
             res.send(memories);
@@ -70,14 +73,30 @@ router.get("/api", (req, res) => {
         });
 }); 
 
+// Get id via title, tags, descriptions (to ensure it is unique)
+// If more than one memory is returned, do not delete. Should investigate.
 router.delete("/api", (req, res) => {
-    let id = req.query.id;
     let title = req.query.Title;
-    Memory.findByIdAndRemove(id)
-    .then(function() {
-        console.log("Deleted memory: " + title);
-        res.redirect("list");
-    })
+    let tags = req.query.Tags;
+    let desc = req.query.Description;
+    Memory.find({ Title: title, Tags: tags, Description: desc })
+        .then(function (memories) {
+            if (memories.length == 1) {
+                let id = memories[0]._id;
+                console.log("id from title: " + title + " = " + id);
+                Memory.findByIdAndRemove(id)
+                    .then(function (memories) {
+                        console.log("Deleted memory: " + title);
+                        res.send(memories);
+                    })
+            }
+            else {
+                res.send('More than one memory found. Delete manually...');
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
 });
 
 module.exports = router;

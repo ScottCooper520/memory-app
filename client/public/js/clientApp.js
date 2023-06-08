@@ -21,7 +21,7 @@
         });
     }
 
-    // Get all Memoriess of given Title
+    // Get all Memories of given Title
     function getByTitle(title) {
         let self = this;
         let urlString = "http://localhost:5000/memory/api?Title=" + title;
@@ -42,17 +42,18 @@
     }
 
     // Delete Memory given ID and Title
-    function delMemory(id, title) {
+    // function delMemory(id, title) {
+    function delMemory(title, tags, desc) {
         let self = this;
-        let urlString = "http://localhost:5000/memory/api?id=" + id + "&Title=" + title;
+        let urlString = "http://localhost:5000/memory/api?Title=" + title + "&Tags=" + tags + "&Description=" + desc;
         $.ajax({
             url: urlString,
             dataType: 'json',
             type: 'DELETE',
             data: null, 
             contentType: 'application/json;charset=utf-8',
-            success: function (res) {
-                alert("Deleted memory id # " + id);
+            success: function (memories) {
+                alert("Deleted memory id # " + memories[0]._id);
             },
             error: function (x, y, z) {
                 alert("Error deleting memory: " + x.responseText);
