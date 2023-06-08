@@ -88,6 +88,7 @@ router.delete("/api", (req, res) => {
                     .then(function (memories) {
                         console.log("Deleted memory: " + title);
                         res.send(memories);
+                        //res.send({ success: true, data: memories });
                     })
             }
             else {
