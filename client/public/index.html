@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Memory App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+        <!-- Note that I don't need to include "../client/public" as it is defined in app.js-->
+    <script src="./js/clientApp.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+
+<body>
+    <h2>Welcome to the Memory App Database!</h2>
+    <h3>Click here to get access to the <b> <a href="/memory/list">Database</a></b></h3>
+    <!-- Send form with user args to add memory -->
+    <div id="dataInput">
+        <form action="http://localhost:5000/memory/api" method="POST">
+            <!-- Note that this field is hidden -->
+            <div class="label" style="float:left">
+                <!-- <label for="id">ID</label> -->
+                <input id="inputId" type="hidden" name="ID">
+            </div>
+            <div class="label" style="float:left">
+                <label for="title">Title</label>
+                <input id="inputTitle" type="text" name="Title">
+            </div>
+            <div class="label" style="float:left">
+                <label for="tags">Tags</label>
+                <input id="inputTags" type="text" name="Tags">
+            </div>
+            <div class="label" style="float:left">
+                <label for="date">Date</label>
+                <input id="inputDate" type="text" name="Date">
+            </div>
+            <div class="label" style="float:left">
+                <label for="description">Description</label>
+                <input id="inputDescription" type="text" name="Description">
+            </div>
+            <div class="label" style="float:left">
+                <label for="url">URL</label>
+                <input id="inputUrl" type="text" name="URL">
+            </div>
+            <div class="label">
+                <label for="note">Note</label>
+                <input id="inputNote" type="text" name="Note">
+            </div>
+            <div>
+                <input class="submit" type="submit" value="Add a Memory">
+            </div>
+        </form>
+        <div class="myButton">
+            <button class="submit" onclick="getAll()">Show all Memories</button>
+        </div>
+        <div class="myButton">
+            <button class="submit" onclick="getTitle()">Show Memories by Title</button>
+        </div>
+        <div class="myButton">
+            <button class="submit" onclick="getTags()">Show Memories by Tags</button>
+        </div>
+        <div class="myButton">
+            <button class="submit" onclick="update()">Update Selected Memory</button>
+        </div>
+        <div class="myButton">
+            <button class="submit" onclick="del()">Delete Selected Memory</button>
+        </div>     
+    </div>
+
+    <div id="results" class="container">
+        <!-- Results are dynamiclly generated and added here -->
+    </div>
+
+    <div id="resultsImg" class="container">
+        <!-- Results are dynamiclly generated and added here -->
+    </div>
+
+    <script>
+        function getTitle() {
+            getByTitle($("#inputTitle").val());
+        }
+        function getTags() {
+            getByTags($("#inputTags").val());
+        }
+        function getAll() {
+            getAllMemories();
+        }
+        function update() {
+            updateMemory($("#inputId").val(), $("#inputTitle").val());
+        }
+        function del() {
+            delMemeory($("#inputId").val(), $("#inputTitle").val());
+        }
+    </script>
+</body>
+</html>

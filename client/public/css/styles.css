@@ -1,0 +1,42 @@
+    /* This is some default css for the app */
+    #dataInput {
+        color: blue;
+        margin: 10px;
+    }
+
+    #div3 {
+        color: purple;
+    }
+
+    .submit {
+        width: 250px;
+        margin-top: 10px;
+    }
+
+    .label {
+        margin-right: 10px;
+    }
+
+    .myButton {
+        float: left;
+        width: 18%;
+        margin-left: 5px;
+        margin-bottom: 5px;
+    }
+
+    #results {
+        margin: 10px;
+        float: left;
+        width: 1000px;
+        overflow-y: auto;
+        height: 600px;
+        background-color: ghostwhite;
+    }
+
+    #resultsImg {
+        margin: 10px;
+        float: left;
+        width: 400px;
+        height: 600px;
+        background-color: lavender;
+    }
