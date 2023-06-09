@@ -62,17 +62,33 @@ router.get("/list", (req, res) => {
         });
 }); 
 
-// Get list of all memories with same title
+// Get list of all memories with same title/tags
 router.get("/api", (req, res) => {
     let title = req.query.Title;
+    let tags = req.query.Tags;
+    if (title) {
     Memory.find({Title: title})
         .then(function (memories) {
-            console.log("All memories: " + memories);
+            console.log("All memories by title: " + memories);
             res.send(memories);
         })
         .catch(function (err) {
             console.log(err);
         });
+    }
+    else if (tags) {
+        Memory.find({Tags: tags})
+        .then(function (memories) {
+            console.log("All memories by tags: " + memories);
+            res.send(memories);
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+    }
+    else {
+        console.log("No title/tag specified for given query...");
+    }
 }); 
 
 // Save() will update the entire doc, whereas find/update features update

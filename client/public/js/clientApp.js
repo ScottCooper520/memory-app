@@ -41,21 +41,22 @@ function getByTitle(title) {
     });
 }
 
-// Delete Memory given ID and Title
-function delMemory(id, title) {
+// Get all Memories of given Tags
+function getByTags(tags) {
     let self = this;
-    let urlString = "http://localhost:5000/memory/api?Id=" + id + "Title=" + title;
+    let urlString = "http://localhost:5000/memory/api?Tags=" + tags;
     $.ajax({
         url: urlString,
         dataType: 'json',
-        type: 'DELETE',
+        type: 'GET',
         data: null,
         contentType: 'application/json;charset=utf-8',
         success: function (memories) {
-            alert("Deleted memory id = " + memories[0]._id + "; Title = " + memories[0].Title);
+            console.log("Get all memories by Tags Success");
+            self.displayResults(memories);
         },
         error: function (x, y, z) {
-            alert("Error deleting memory: " + x.responseText);
+            console.log("Error getting all memories by tags: " + x.responseText);
         }
     });
 }
@@ -122,11 +123,30 @@ function updateMemory(id, title) {
         contentType: 'application/json;charset=utf-8',
         success: function (memories) {
             console.log("Update memory success for id = " + memories[0]._id);
-            // Update display automatically when updating memories
-            // self.getByTitle(res.title);
+            displayResults(memories);
         },
         error: function (x, y, z) {
             alert("Error updating memory: " + x.responseText);
+        }
+    });
+}
+
+// Delete Memory given ID and Title
+function delMemory(id, title) {
+    let self = this;
+    let urlString = "http://localhost:5000/memory/api?Id=" + id + "Title=" + title;
+    $.ajax({
+        url: urlString,
+        dataType: 'json',
+        type: 'DELETE',
+        data: null,
+        contentType: 'application/json;charset=utf-8',
+        success: function (memories) {
+            getAllMemories();
+            alert("Deleted memory id = " + memories[0]._id + "; Title = " + memories[0].Title);
+        },
+        error: function (x, y, z) {
+            alert("Error deleting memory: " + x.responseText);
         }
     });
 }
@@ -182,13 +202,6 @@ function addClickHandlers() {
         let description = info[4];
         let url = info[5];
         let note = info[6];
-        // //let volume = info[0];
-        // let title = info[0];
-        // let tags = info[1];
-        // let date = info[2];
-        // let description = info[3];
-        // let url = info[4];
-        // let note = info[5];
         console.log("Title = " + title);
         $("#inputId").val(id);
         $("#inputTitle").val(title);
