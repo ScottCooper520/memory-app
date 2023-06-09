@@ -21,15 +21,19 @@ app.use(express.static('../client/public'));
 // Note the use of double-double leading backslashes as this is a shared drive
 // Accessed with e.g.: localhost:5000/Photos/img001.jpg
 
-// Not usre how to adjust server image retrieval going from linux to windows.
+// Not sure how to adjust server image retrieval going from linux to windows.
 // app.use('/Photos', express.static('\\\\Coopcraft\\nuc8tb\\Pictures\\Family\\WeddingRelated\\SnLWeddingOfficialPhotos'));
 
 // This returns an image from drive 'F' which is SafeDep4TBb (unlike getting images from server above)
+// I think 'mnt' (bridge to windows file system) is automatically available because I am using WSL. Otherwise, 
+// I believe we would need to mount this file via a script (which is how I did it for the home server).
 app.use('/Photos', express.static('/mnt/f/Pictures/Family/OregonMay2023'));
 
-// I am thinking that this file (app.js) will just serve the default html/supporting files
+// This file (app.js) will just serve the default html/supporting files
 // as required by index.html (i.e. the 'home' page).
 // All data-centric calls will be handled with the memoryController.js file.
+// The images are an exception as they need no controller to access them - just the '<img src' tag
+// on the client side, which accesses above with: "http://localhost:5000/Photos/" + imgName ...
 
 // API calls...
 // ============

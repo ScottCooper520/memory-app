@@ -180,7 +180,7 @@ function displayResults(memories) {
             '<div class="col-sm-1">' +
             memory.Description +
             '</div>' +
-            '<div class="col-sm-2">' +
+            '<div class="col-sm-1" style="overflow: hidden">' +
             memory.URL +
             '</div>' +
             '<div class="col-sm-1">' +
@@ -222,7 +222,7 @@ function addClickHandlers() {
 
 function displayImage(imgName) {
     $("#resultsImg").html('<img src="' +
-        "http://localhost:5000/Photos/" + imgName + '" width="400" height="600"/>');
+        "http://localhost:5000/Photos/" + imgName + '" width="500" height="600"/>');
 }
 
 // Sort numerically (rather than alpha default)
