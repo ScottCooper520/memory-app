@@ -61,48 +61,8 @@ function getByTags(tags) {
     });
 }
 
-// // Delete Memory given Title, Tags, Description
-// function delMemory(title, tags, desc) {
-//     let self = this;
-//     let urlString = "http://localhost:5000/memory/api?Title=" + title + "&Tags=" + tags + "&Description=" + desc;
-//     $.ajax({
-//         url: urlString,
-//         dataType: 'json',
-//         type: 'DELETE',
-//         data: null, 
-//         contentType: 'application/json;charset=utf-8',
-//         success: function (memories) {
-//             alert("Deleted memory id # " + memories[0]._id);
-//         },
-//         error: function (x, y, z) {
-//             alert("Error deleting memory: " + x.responseText);
-//         }
-//     });
-// }
-
-// // Update Memory given Title, Tags, Description
-// function updateMemory(title, tags, desc) {
-//     let self = this;
-//     let urlString = "http://localhost:5000/memory/api?Title=" + title + "&Tags=" + tags + "&Description=" + desc;
-//     $.ajax({
-//         url: urlString,
-//         dataType: 'json',
-//         type: 'PUT',
-//         data: null, 
-//         contentType: 'application/json;charset=utf-8',
-//         success: function (memories) {
-//             alert("Updated memory id # " + memories[0]._id);
-//         },
-//         error: function (x, y, z) {
-//             alert("Error updating memory: " + x.responseText);
-//         }
-//     });
-// }
-
 // Update Memory given ID and Title
-// ToDo: Since I now support row selection, do not need to pass id and title
 function updateMemory(id, title) {
-    let self = this;
     let urlString = "http://localhost:5000/memory/api";
     let data = {};
     data.id = id;
@@ -124,7 +84,6 @@ function updateMemory(id, title) {
                 memory = memories[0];
             }
             console.log("Update memory success for id = " + memory._id);
-            // displayResults(memories);
             getAllMemories();
         },
         error: function (x, y, z) {
@@ -135,7 +94,6 @@ function updateMemory(id, title) {
 
 // Delete Memory given ID and Title
 function delMemory(id, title) {
-    let self = this;
     let urlString = "http://localhost:5000/memory/api?Id=" + id + "Title=" + title;
     $.ajax({
         url: urlString,
@@ -168,27 +126,25 @@ function displayResults(memories) {
             '<div class="col-sm-1" style="overflow: hidden">' +
             memory._id +
             '</div>' +
-            '<div class="col-sm-2">' +
+            '<div class="col-sm-2" style="overflow: hidden>' +
             memory.Title +
             '</div>' +
-            '<div class="col-sm-2">' +
+            '<div class="col-sm-2" style="overflow: hidden>' +
             memory.Tags +
             '</div>' +
-            '<div class="col-sm-1">' +
+            '<div class="col-sm-1" style="overflow: hidden>' +
             memory.Date +
             '</div>' +
-            '<div class="col-sm-1">' +
+            '<div class="col-sm-1" style="overflow: hidden>' +
             memory.Description +
             '</div>' +
             '<div class="col-sm-1" style="overflow: hidden">' +
             memory.URL +
             '</div>' +
-            '<div class="col-sm-1">' +
+            '<div class="col-sm-1" style="overflow: hidden>' +
             memory.Note +
             '</div>' +
-            '<div class="col-sm-1">' +
-            // memory.imgName +
-            // '</div>' +
+            '<div class="col-sm-1" style="overflow: hidden>' +
             '</div>'
         );
     });

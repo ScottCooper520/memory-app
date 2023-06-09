@@ -8,8 +8,12 @@ To run the debugger on a node js file that is not the top-level default:
 	2. Open the file to run (i.e. ./server/app.js) in the editor.
 	3. In debugger, select Run Current File option.
 
-6/5/2023 - Memory App Prototype
+6/9/2023 - Status
+=================
+This is all working at this point, including reading images from the Windows filesystem.
 
+6/5/2023 - Memory App Prototype
+===============================
 This is the linux-based prototype for the memory app project. It contains:
 - NodeJs backend
 - ExpressJs CRUD ops
