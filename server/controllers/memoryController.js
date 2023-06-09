@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 const Memory = mongoose.model("Memory");
 
 router.post("/api", (req, res) => {
-  if (!req.body._id || req.body._id == '') {
+    if ((!req.query.id || req.query.id == '') 
+        && (!req.body.id || req.body.id == '')) {
     insertRecord(req, res);
   } else {
-    updateRecord(req, res);
+    //updateRecord(req, res);
+    updateMemory(req, res);
   }
 });
 
@@ -29,20 +31,20 @@ function insertRecord(req, res) {
     });
   }
 
-function updateRecord(req, res) {
-  Memory.findOneAndUpdate(
-    { _id: req.body._id },
-    req.body,
-    { new: true },
-    (err, doc) => {
-      if (!err) {
-        res.redirect("memory/list");
-      } else {
-        console.log("Error during update: " + err);
-      }
-    }
-  );
-}
+// function updateRecord(req, res) {
+//   Memory.findOneAndUpdate(
+//     { _id: req.body._id },
+//     req.body,
+//     { new: true },
+//     (err, doc) => {
+//       if (!err) {
+//         res.redirect("memory/list");
+//       } else {
+//         console.log("Error during update: " + err);
+//       }
+//     }
+//   );
+// }
 
 // Get list of all memories
 router.get("/list", (req, res) => {
@@ -73,31 +75,108 @@ router.get("/api", (req, res) => {
         });
 }); 
 
-// Get id via title, tags, descriptions (to ensure it is unique)
-// If more than one memory is returned, do not delete. Should investigate.
-router.delete("/api", (req, res) => {
-    let title = req.query.Title;
-    let tags = req.query.Tags;
-    let desc = req.query.Description;
-    Memory.find({ Title: title, Tags: tags, Description: desc })
+// Save() will update the entire doc, whereas find/update features update
+// specific fields. I think save makes more sense in our case.
+function updateMemory(req, res)  {
+    let id = req.body.id;
+    let title = req.body.Title;
+    let tags = req.body.Tags;
+    let date = req.body.Date;
+    let description = req.body.Description;
+    let url = req.body.URL;
+    let note = req.body.Note;
+    Memory.find({ _id: id })
         .then(function (memories) {
             if (memories.length == 1) {
-                let id = memories[0]._id;
-                console.log("id from title: " + title + " = " + id);
-                Memory.findByIdAndRemove(id)
-                    .then(function (memories) {
-                        console.log("Deleted memory: " + title);
-                        res.send(memories);
-                        //res.send({ success: true, data: memories });
-                    })
+                let memory = memories[0];
+                memory.Title = title;
+                memory.Tags = tags;
+                memory.Date = date;
+                memory.Description = description;
+                memory.URL = url;
+                memory.Note = note;
+                memory.save();
+                //let id = memories[0]._id;
+                console.log("Updated id = " + id + "; title = " + title);
+                res.send(memories);
             }
             else {
-                res.send('More than one memory found. Delete manually...');
+                res.send('More than one memory found. Update manually...');
             }
         })
         .catch(function (err) {
             console.log(err);
         });
+};
+// // See a problem with this approach for update: I use the client fields to 
+// // get strings with which to get the id. However, for an update, those very
+// // strings have likely changed, so no id will be found.
+// // BTW - save will update the entire doc, whereas find/update features update
+// // specific fields. I think save makes more sense in our case.
+// // Get id via title, tags, descriptions (to ensure it is unique)
+// // If more than one memory is returned, do not delete. Should investigate.
+// function updateMemory(req, res)  {
+//     let title = req.query.Title;
+//     let tags = req.query.Tags;
+//     let desc = req.query.Description;
+//     Memory.find({ Title: title, Tags: tags, Description: desc })
+//         .then(function (memories) {
+//             if (memories.length == 1) {
+//                 let id = memories[0]._id;
+//                 console.log("id from title: " + title + " = " + id);
+//                 Memory.findById(id)
+//                     .then(function (memory) {
+
+//                         console.log("Updated memory: " + title);
+//                         res.send(memory);
+//                         //res.send({ success: true, data: memories });
+//                     })
+//             }
+//             else {
+//                 res.send('More than one memory found. Delete manually...');
+//             }
+//         })
+//         .catch(function (err) {
+//             console.log(err);
+//         });
+// };
+
+// // Get id via title, tags, descriptions (to ensure it is unique)
+// // If more than one memory is returned, do not delete. Should investigate.
+// router.delete("/api", (req, res) => {
+//     let title = req.query.Title;
+//     let tags = req.query.Tags;
+//     let desc = req.query.Description;
+//     Memory.find({ Title: title, Tags: tags, Description: desc })
+//         .then(function (memories) {
+//             if (memories.length == 1) {
+//                 let id = memories[0]._id;
+//                 console.log("id from title: " + title + " = " + id);
+//                 Memory.findByIdAndRemove(id)
+//                     .then(function (memories) {
+//                         console.log("Deleted memory: " + title);
+//                         res.send(memories);
+//                         //res.send({ success: true, data: memories });
+//                     })
+//             }
+//             else {
+//                 res.send('More than one memory found. Delete manually...');
+//             }
+//         })
+//         .catch(function (err) {
+//             console.log(err);
+//         });
+// });
+
+router.delete("/api", (req, res) => {
+    let id = req.query.id;
+    let title = req.query.Title;
+    Memory.findByIdAndRemove(id)
+        .then(function (memories) {
+            console.log("Deleted memory: " + title);
+            res.send(memories);
+            //res.send({ success: true, data: memories });
+        })
 });
 
 module.exports = router;

@@ -18,11 +18,10 @@
     <!-- Send form with user args to add memory -->
     <div id="dataInput">
         <form action="http://localhost:5000/memory/api" method="POST">
-            <!-- Note that this field is hidden -->
-            <!-- <div class="label" style="float:left">
+            <div class="label" style="float:left">
                 <label for="id">ID</label>
-                <input id="inputId" type="hidden" name="ID">
-            </div> -->
+                <input id="inputId" name="ID">
+            </div>
             <div class="label" style="float:left">
                 <label for="title">Title</label>
                 <input id="inputTitle" type="text" name="Title">
@@ -86,14 +85,20 @@
         function getAll() {
             getAllMemories();
         }
-        // Unline the Masterworks approach, for this app I will get IDs by interrogating other fields. 
-        // Doing this so we don't need the ids displayed anywhere.
         function update() {
-            updateMemory($("#inputTitle").val(), $("#inputTags").val(), $("#inputDescription").val());
+            updateMemory($("#inputId").val(), $("#inputTitle").val());
         }
         function del() {
-            delMemory($("#inputTitle").val(), $("#inputTags").val(), $("#inputDescription").val());
+            delMemory($("#inputId").val(), $("#inputTitle").val());
         }
+        // // Unline the Masterworks approach, for this app I will get IDs by interrogating other fields. 
+        // // Doing this so we don't need the ids displayed anywhere.
+        // function update() {
+        //     updateMemory($("#inputTitle").val(), $("#inputTags").val(), $("#inputDescription").val());
+        // }
+        // function del() {
+        //     delMemory($("#inputTitle").val(), $("#inputTags").val(), $("#inputDescription").val());
+        // }
     </script>
 </body>
 </html>
