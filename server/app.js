@@ -21,7 +21,11 @@ app.use(express.static('../client/public'));
 // Note the use of double-double leading backslashes as this is a shared drive
 // Accessed with e.g.: localhost:5000/Photos/img001.jpg
 
-//ok app.use('/Photos', express.static('\\\\Coopcraft\\nuc8tb\\Pictures\\Family\\WeddingRelated\\SnLWeddingOfficialPhotos'));
+// Not usre how to adjust server image retrieval going from linux to windows.
+// app.use('/Photos', express.static('\\\\Coopcraft\\nuc8tb\\Pictures\\Family\\WeddingRelated\\SnLWeddingOfficialPhotos'));
+
+// This returns an image from drive 'F' which is SafeDep4TBb (unlike getting images from server above)
+app.use('/Photos', express.static('/mnt/f/Pictures/Family/OregonMay2023'));
 
 // I am thinking that this file (app.js) will just serve the default html/supporting files
 // as required by index.html (i.e. the 'home' page).

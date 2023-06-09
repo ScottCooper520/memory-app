@@ -23,13 +23,13 @@ function insertRecord(req, res) {
     memory.URL = req.body.URL;
     memory.Note = req.body.Note;
     memory.save()
-    .then(function(memory) {
-      console.log("Saved memory: " + memory.Title);
-      res.send(memory);
-      // Below is what I do for MMs after posting... not quite working here...
-      //res.sendFile(path.join(__dirname, '../../client/public/'));
-    });
-  }
+        .then(function (memory) {
+            console.log("Saved memory: " + memory.Title);
+            res.send(memory);
+            // Below is what I do for MMs after posting... not quite working here...
+            //res.sendFile(path.join(__dirname, '../../client/public/'));
+        });
+}
 
 // function updateRecord(req, res) {
 //   Memory.findOneAndUpdate(
@@ -93,7 +93,7 @@ router.get("/api", (req, res) => {
 
 // Save() will update the entire doc, whereas find/update features update
 // specific fields. I think save makes more sense in our case.
-function updateMemory(req, res)  {
+function updateMemory(req, res) {
     let id = req.body.id;
     let title = req.body.Title;
     let tags = req.body.Tags;
@@ -111,10 +111,11 @@ function updateMemory(req, res)  {
                 memory.Description = description;
                 memory.URL = url;
                 memory.Note = note;
-                memory.save();
-                //let id = memories[0]._id;
-                console.log("Updated id = " + id + "; title = " + title);
-                res.send(memories);
+                memory.save()
+                    .then(function (memories) {
+                        console.log("Updated id = " + id + "; title = " + title);
+                        res.send(memories);
+                    })
             }
             else {
                 res.send('More than one memory found. Update manually...');

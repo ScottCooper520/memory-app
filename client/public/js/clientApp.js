@@ -112,18 +112,20 @@ function updateMemory(id, title) {
     data.Description = $("#inputDescription").val();
     data.URL = $("#inputUrl").val();
     data.Note = $("#inputNote").val();
-    // let queryStr = "?id=" + id + "&Title=" + title + "&Tags=" + tags
-    //     + "&Date=" + date + "&Description=" + description + "&URL=" + url + "&Note=" + note;
     $.ajax({
-        url: urlString, // + queryStr,
+        url: urlString,
         dataType: 'json',
-        // type: 'PUT',
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json;charset=utf-8',
         success: function (memories) {
-            console.log("Update memory success for id = " + memories[0]._id);
-            displayResults(memories);
+            let memory = memories;
+            if (Array.isArray(memories)) {
+                memory = memories[0];
+            }
+            console.log("Update memory success for id = " + memory._id);
+            // displayResults(memories);
+            getAllMemories();
         },
         error: function (x, y, z) {
             alert("Error updating memory: " + x.responseText);
@@ -143,7 +145,11 @@ function delMemory(id, title) {
         contentType: 'application/json;charset=utf-8',
         success: function (memories) {
             getAllMemories();
-            alert("Deleted memory id = " + memories[0]._id + "; Title = " + memories[0].Title);
+            let memory = memories;
+            if (Array.isArray(memories)) {
+                memory = memories[0];
+            }
+            alert("Deleted memory id = " + memory._id + "; Title = " + memory.Title);
         },
         error: function (x, y, z) {
             alert("Error deleting memory: " + x.responseText);
@@ -210,13 +216,13 @@ function addClickHandlers() {
         $("#inputDescription").val(description);
         $("#inputUrl").val(url);
         $("#inputNote").val(note);
-        // self.displayImage(imgName);
+        self.displayImage(url);
     });
 }
 
 function displayImage(imgName) {
     $("#resultsImg").html('<img src="' +
-        "http://localhost:5000/images/" + imgName + '" width="400" height="600"/>');
+        "http://localhost:5000/Photos/" + imgName + '" width="400" height="600"/>');
 }
 
 // Sort numerically (rather than alpha default)
