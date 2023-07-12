@@ -126,25 +126,25 @@ function displayResults(memories) {
             '<div class="col-sm-1" style="overflow: hidden">' +
             memory._id +
             '</div>' +
-            '<div class="col-sm-2" style="overflow: hidden>' +
+            '<div class="col-sm-2" style="overflow: hidden">' +
             memory.Title +
             '</div>' +
-            '<div class="col-sm-2" style="overflow: hidden>' +
+            '<div class="col-sm-2" style="overflow: hidden">' +
             memory.Tags +
             '</div>' +
-            '<div class="col-sm-1" style="overflow: hidden>' +
+            '<div class="col-sm-1" style="overflow: hidden">' +
             memory.Date +
             '</div>' +
-            '<div class="col-sm-1" style="overflow: hidden>' +
+            '<div class="col-sm-1" style="overflow: hidden">' +
             memory.Description +
             '</div>' +
             '<div class="col-sm-1" style="overflow: hidden">' +
             memory.URL +
             '</div>' +
-            '<div class="col-sm-1" style="overflow: hidden>' +
+            '<div class="col-sm-1" style="overflow: hidden">' +
             memory.Note +
             '</div>' +
-            '<div class="col-sm-1" style="overflow: hidden>' +
+            '<div class="col-sm-1" style="overflow: hidden">' +
             '</div>'
         );
     });
