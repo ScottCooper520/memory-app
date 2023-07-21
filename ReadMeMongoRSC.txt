@@ -11,15 +11,17 @@ E.g. mongosh "mongodb://localhost:28015" or mongosh --port 28015
 
 To connect to a specific database (such as specified in nodejs):
 
-  mongosh "mongodb://localhost:27017/mydb"
+  mongosh "mongodb://localhost:27017/MemoryDB"
 
-where mydb is also in the url string in the nodedb specification.
+where MemoryDB is also in the url string in the nodedb (db.js) specification.
 
 To disconnect from deployment, use one of the following:
   Type .exit, exit, or exit().
   Type quit or quit().
   Press Ctrl + D.
   Press Ctrl + C twice.
+
+Note that I have simplified the structure for Mongoose in the electro-lab-db project.
 
 This is what I needed to do to get MongoDB working with Node app.
 Once db exists, then can use Node code to insert, delete, etc.
@@ -32,7 +34,7 @@ Created db 'mydb' and added one record to it:
   -> test> prompt
 
   test> show dbs
-  -> admin 180KiB, confog 48 KiB, local 72 KiB
+  -> admin 180KiB, config 48 KiB, local 72 KiB
 
   use mydb
   -> Creates (empty) database, mydb
@@ -46,3 +48,21 @@ Note that typing db will also show which database is active.
 
   mydb> show dbs
   -> added mydb 80 KiB to dbs shown above
+
+For the actual DB, MemoryDB
+  MemoryDB> show collections
+  -> Collection
+     memories
+
+  MemoryDB> db.memories.find()
+  -> [
+  {
+    _id: ObjectId("648205efbd5d77f6859c679e"),
+    Title: 'Memory1',
+    Tags: 'Tag1',
+    Date: 'Date1',
+    Description: 'Desc1',
+    URL: '20230521_085033.jpg',
+    Note: 'Note1',
+    __v: 0
+  }, etc...]
