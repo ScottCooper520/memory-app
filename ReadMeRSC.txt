@@ -3,6 +3,8 @@ cd to .../memory-app/server
 type: node app.js
 Open browser to localhost:5000
 
+This is another comment
+
 To run the debugger on a node js file that is not the top-level default:
 	1. Open the debugger.
 	2. Open the file to run (i.e. ./server/app.js) in the editor.
