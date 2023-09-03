@@ -2,6 +2,7 @@ const express = require("express");
 var router = express.Router();
 const path = require('path');
 const mongoose = require("mongoose");
+// This is the (class-like) schema for the database
 const Memory = mongoose.model("Memory");
 
 router.post("/api", (req, res) => {

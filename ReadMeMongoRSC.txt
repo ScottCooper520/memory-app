@@ -21,7 +21,7 @@ To disconnect from deployment, use one of the following:
   Press Ctrl + D.
   Press Ctrl + C twice.
 
-Note that I have simplified the structure for Mongoose in the electro-lab-db project.
+Note that I have simplified the structure for Mongoose in the electro-lab project.
 
 This is what I needed to do to get MongoDB working with Node app.
 Once db exists, then can use Node code to insert, delete, etc.

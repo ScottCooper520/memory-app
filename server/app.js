@@ -5,6 +5,7 @@ require('./models/db');
 let express = require('express');
 let app = express();
 const path = require('path');
+// Formats incoming body content and exposes in req.body
 const bodyParser = require("body-parser");
 
 // This contains the API calls that handle memory management
@@ -17,10 +18,16 @@ app.use(bodyParser.json());
 // Paths are relative to server folder (where node app is located).
 app.use(express.static('../client/public'));
 
-// This returns an image from drive 'F' which is SafeDep4TBb.
+// This shows how to access a hard drive directly.
+// This returns an image from drive 'E' which is SafeDep4TBa.
 // I think 'mnt' (bridge to windows file system) is automatically available because I am using WSL. Otherwise, 
 // I believe we would need to mount this file via a script (which is how I did it for the home server).
-app.use('/Photos', express.static('/mnt/f/Pictures/Family/OregonMay2023'));
+app.use('/Photos', express.static('/mnt/e/Pictures/Family/OregonMay2023'));
+
+// This shows how to access shared Coopcraft network drive.
+// Note the use of double-double leading backslashes as this is a shared drive.
+// Accessed with e.g.: localhost:5000/Photos/img001.jpg.
+// app.use('/Photos', express.static('\\\\Coopcraft\\nuc8tb\\Pictures\\Family\\WeddingRelated\\SnLWeddingOfficialPhotos'));
 
 // This file (app.js) will just serve the default html/supporting files
 // as required by index.html (i.e. the home '/' page).
